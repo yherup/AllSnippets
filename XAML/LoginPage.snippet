@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>LoginPage</Title>
+      <Shortcut>LoginPage</Shortcut>
+    </Header>
+    <Snippet>
+      <Code Language="XAML">
+        <![CDATA[
+         Title="Авторизация">
+
+    <Grid>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Логин" Margin="0 0 0 5"/>
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Пароль" Margin="0 0 0 5"/>
+
+                <TextBox Grid.Row="0" Grid.Column="1" Name="textBoxLogin" MinWidth="150" Margin="0 0 0 5"></TextBox>
+                <PasswordBox Grid.Row="1" Grid.Column="1" Name="passwordBoxPassword" MinWidth="150" Margin="0 0 0 5"></PasswordBox>
+
+                <easy:Captcha Name="captcha" Visibility="Collapsed" Grid.Row="2" Grid.ColumnSpan="2" Width="200" Height="50" Margin=" 0 0 0 5"/>
+                <TextBox Name="textBoxAnswerCaptcha" Visibility="Collapsed" Grid.Row="3" Grid.ColumnSpan="2" 
+                         HorizontalAlignment="Center" MinWidth="100" TextAlignment="Center"/>
+
+                <Button Name="buttonLogin" Click="buttonLogin_Click" Grid.Row="4" Grid.Column="0" Content="Войти"/>
+                <Button Name="buttonClear" Click="buttonClear_Click" Grid.Row="4" Grid.Column="1" Content="Очистить"/>
+            </Grid>
+        </StackPanel>
+    </Grid>
+        ]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

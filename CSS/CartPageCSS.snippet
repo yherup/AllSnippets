@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>CartPageCSS</Title>
+      <Shortcut>CartPageCSS</Shortcut>
+    </Header>
+    <Snippet>
+      <Code Language="CSharp">
+        <![CDATA[
+        public int quantityInCart { get; set; }
+        public decimal ProductTotalCost { get; set; }
+        public List<ContentOrder> orderProduct { get; set; }
+        public List<Product> Products { get; set; }
+        public List<CartList> cartLists { get; set; }
+
+        public CartPage()
+        {
+            InitializeComponent();
+        }
+
+        public CartPage(List<Product> products)
+        {
+            InitializeComponent();
+            Products = products;
+            UpdateCard();
+            UpdatePickUpPoint();
+        }
+        private void buttonQuantityPlus_Click(object sender, RoutedEventArgs e)
+        {
+            var currentProduct = (CartList)dataGridProducts.SelectedItem;
+            var newProduct = App.db.Products.Where(p => p.ProductArticleNumber == currentProduct.ProductArticleNumber).First();
+            Products.Add(newProduct);
+            UpdateCard();
+        }
+
+        private void buttonQuantityMinus_Click(object sender, RoutedEventArgs e)
+        {
+            var currentProduct = (CartList)dataGridProducts.SelectedItem;
+            var newProduct = App.db.Products.Where(p => p.ProductArticleNumber == currentProduct.ProductArticleNumber).First();
+            Products.Remove(newProduct);
+            UpdateCard();
+        }
+
+        private void UpdateCard()
+        {
+            orderProduct = new List<ContentOrder>();
+            cartLists = new List<CartList>();
+            foreach (var p in Products.OrderBy(p => p.ProductName).Distinct())
+            {
+                ContentOrder orderProductItem = new ContentOrder
+                {
+                    ProductArticleNumber = p.ProductArticleNumber,
+                    ProductAmount = Products.Where(e => e == p).Count()
+                };
+                orderProduct.Add(orderProductItem);
+                cartLists.Add(new CartList(p.ProductName, p.ProductDescription, p.ProductManufacturerNavigation.Manufacturer1,
+                    p.ProductDiscountAmount, orderProductItem.ProductAmount, 
+                    p.ProductTotalCost * orderProductItem.ProductAmount, p.ProductArticleNumber));
+            }
+            dataGridProducts.ItemsSource = cartLists;
+        }
+
+        private void UpdatePickUpPoint()
+        {
+            ComboPickUpPoint.ItemsSource = App.db.PickupPoints.ToList();
+            ComboPickUpPoint.DisplayMemberPath = "PickupAdres";
+            ComboPickUpPoint.SelectedValuePath = "PickupPointId";
+            ComboPickUpPoint.SelectedValue = "1";
+        }
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                int UserId = 100;
+                if(App.currentUser != null)
+                {
+                    UserId = App.currentUser.UserId;
+                }
+                DateTime DeliveryDate;
+                if (orderProduct.Count>3)
+                {
+                    DeliveryDate = DateTime.Now.AddDays(3);
+                }
+                else
+                {
+                    DeliveryDate = DateTime.Now.AddDays(6);
+                }
+                var LastOrder = App.db.Orders.OrderBy(o => o.OrderId).LastOrDefault();
+                Order NewOrder = new Order()
+                {
+                    OrderClient = UserId,
+                    OrderStatus = 1,
+                    OrderDate = DateTime.Now,
+                    OrderDeliveryDate = DeliveryDate,
+                    OrderCode = LastOrder.OrderCode+=10,
+                    OrderPickupPoint = ComboPickUpPoint.SelectedIndex
+                };
+                App.db.Orders.Add(NewOrder);
+                App.db.SaveChanges();
+                foreach (var o in orderProduct)
+                    o.OrderId = App.db.Orders.OrderBy(o => o.OrderId).LastOrDefault().OrderId;
+                App.db.ContentOrders.AddRange(orderProduct);
+                if (App.db.SaveChanges() > 0) 
+                {
+                    MessageBox.Show($"Заказ оформлен. Номер заказа {NewOrder.OrderCode}.", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            catch 
+            {
+                MessageBox.Show("Ошибка оформления заказа", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        ]]>
+      </Code>
+      <Imports>
+        <Import>
+          <Namespace>System.IO</Namespace>
+        </Import>
+      </Imports>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

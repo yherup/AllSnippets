@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>ProductPage</Title>
+      <Shortcut>ProductPage</Shortcut>
+    </Header>
+    <Snippet>
+      <Code Language="XAML">
+        <![CDATA[
+         Title="Товары" Loaded="Page_Loaded">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <ComboBox Margin="5" Width="150" Name="comboBoxSortBy" SelectionChanged="comboBoxSortBy_SelectionChanged">
+                <ComboBoxItem Content="По возрастанию цены"/>
+                <ComboBoxItem Content="По убыванию цены"/>
+            </ComboBox>
+
+            <ComboBox Margin="5" Width="150" Name="comboBoxSortByDiscount" SelectionChanged="comboBoxSortByDiscount_SelectionChanged">
+                <ComboBoxItem Content="Все"></ComboBoxItem>
+                <ComboBoxItem Content="от 0% до 9,99%"></ComboBoxItem>
+                <ComboBoxItem Content="от 10% до 14,99%"></ComboBoxItem>
+                <ComboBoxItem Content="от 15%"></ComboBoxItem>
+            </ComboBox>
+
+            <TextBox Name="textBoxSearch" Width="150" Margin="5" TextChanged="textBoxSearch_TextChanged"/>
+
+            <Button Name="resetToDefault" Content="Сборсить фильтры" Width="150" Margin="5" Click="resetToDefault_Click"/>
+        </StackPanel>
+
+        <TextBlock Grid.Row="1" Style="{StaticResource BlockCommon}" Width="auto" 
+                   FontWeight="Bold" Name="blockRecords"></TextBlock>
+
+        <ListView Grid.Row="2" Name="listViewProducts" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="1"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderBrush="{StaticResource ColorAccent}" CornerRadius="15"
+                            Padding="5" Background="{Binding BackColor}">
+                        <Grid>
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel Orientation="Vertical">
+                                        <Image Width="50" Height="50" HorizontalAlignment="Left" Name="imageProduct" Source="{Binding ProductPhoto}"/>
+                                        <TextBlock Style="{StaticResource BlockCommon}" 
+                                                   HorizontalAlignment="Left"
+                                                    Width="auto" Text="{Binding ProductDiscountAmount}">%</TextBlock>
+                                    </StackPanel>
+                                    <StackPanel >
+
+                                        <TextBlock Style="{StaticResource BlockCommon}" 
+                                           HorizontalAlignment="Left"
+                                           Width="auto" Text="{Binding ProductName}" FontWeight="Bold" />
+                                        <TextBlock Style="{StaticResource BlockCommon}" 
+                                           HorizontalAlignment="Left"
+                                           Width="auto" Text="{Binding ProductDescription}" TextWrapping="Wrap"/>
+                                        <TextBlock Style="{StaticResource BlockCommon}" 
+                                           HorizontalAlignment="Left"
+                                           Width="auto" Text="{Binding ProductManufacturerNavigation.Manufacturer1}"/>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Style="{StaticResource BlockCommon}"
+                                           Width="auto" Text="{Binding ProductCost, StringFormat=N2}"
+                                           TextDecorations="Strikethrough"> Р</TextBlock>
+                                            <TextBlock Width="auto" Style="{StaticResource BlockCommon}"
+                                               Text="{Binding ProductTotalCost, StringFormat=N2}"> Р</TextBlock>
+                                        </StackPanel>
+                                    </StackPanel>
+                                    
+                                </StackPanel>
+                                <Button Content="Удалить" 
+                                        Name="buttonDeleteProduct" 
+                                        Click="buttonDeleteProduct_Click"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Bottom"
+                                        Width="125"
+                                        Visibility="{Binding DataContext.AdminControlVisibility, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:ProductPage}}}"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Name="contextMenuAddToOrder" Header="Добавить к заказу" Click="contextMenuAddToOrder_Click"/>
+                </ContextMenu>
+            </ListView.ContextMenu>
+        </ListView>
+
+        <TextBlock Margin="10 0 0 0" FontSize="20" FontWeight="Bold" 
+                   Name="textBlockCostInCart" Grid.Row="3" 
+                   HorizontalAlignment="Left" VerticalAlignment="Center" 
+                   Text="" Visibility="Collapsed"/>
+        <StackPanel Margin="0 0 10 0" Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Grid.Row="3" HorizontalAlignment="Right" Name="buttonOrders" Click="buttonOrders_Click" Content="Просмотр заказов"/>
+            <Button Grid.Row="3" HorizontalAlignment="Right" Name="buttonCart" Click="buttonCart_Click" Content="Корзина" Visibility="Collapsed"/>
+        </StackPanel>
+    </Grid>
+        ]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>OrderPage</Title>
+      <Shortcut>OrderPage</Shortcut>
+    </Header>
+    <Snippet>
+      <Code Language="XAML">
+        <![CDATA[
+         Title="Список заказов">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <DataGrid IsReadOnly="True" SelectionMode="Single" AutoGenerateColumns="False" Name="dataGridOrders">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Номер заказа" Binding="{Binding OrderId}"/>
+                <DataGridTextColumn Header="Пользователь" Binding="{Binding OrderClientNavigation.UserName }"/>
+                <DataGridTextColumn Header="Дата заказа" Binding="{Binding OrderDate, StringFormat=\{0:dd.MM.yy\}}"/>
+                <DataGridTextColumn Header="Дата доставки" Binding="{Binding OrderDeliveryDate, StringFormat=\{0:dd.MM.yy\}}"/>
+                <DataGridTextColumn Header="Точка доставки" Binding="{Binding OrderPickupPointNavigation.PickupPointNumber}"/>
+                <DataGridTextColumn Header="Статус" Binding="{Binding OrderStatusNavigation.Status}"/>
+                <DataGridTextColumn Header="Код для получения" Binding="{Binding OrderCode}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Grid.Row="1" Content="Просмотр товаров в заказе" Width="250"
+                Name="buttonShowProductsInOrder" Click="buttonShowProductsInOrder_Click"/>
+    </Grid>
+        ]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

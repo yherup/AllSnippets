@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>OrderProductListPageCSS</Title>
+      <Shortcut>OrderProductListPageCSS</Shortcut>
+    </Header>
+    <Snippet>
+      <Code Language="CSharp">
+        <![CDATA[
+                public OrderProductListPage()
+        {
+            InitializeComponent();
+        }
+
+        public OrderProductListPage(int index)
+        {
+            InitializeComponent();
+
+            decimal resultCost = 0;
+            List<ListContent> listHelp = new();
+            var listProduct = App.db.ContentOrders.Where(p => p.OrderId == index);
+            foreach (var p in listProduct)
+            {
+                ListContent ListContent = new ListContent
+                {
+                    Article = p.ProductArticleNumber,
+                    Name = p.ProductArticleNumberNavigation.ProductDescription,
+                    Manufacturer = p.ProductArticleNumberNavigation.ProductManufacturerNavigation.Manufacturer1,
+                    Count = p.ProductAmount,
+                    Cost = p.ProductAmount * p.ProductArticleNumberNavigation.ProductTotalCost
+                };
+                listHelp.Add(ListContent);
+            }
+            dataGridOrderListProduct.ItemsSource = listHelp;
+
+            foreach (var res in listHelp)
+                resultCost += (decimal)(res.Cost * res.Count);
+            textBlockResult.Text = String.Format("{0:C2}", resultCost);
+        }
+        ]]>
+      </Code>
+      <Imports>
+        <Import>
+          <Namespace>System.IO</Namespace>
+        </Import>
+      </Imports>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

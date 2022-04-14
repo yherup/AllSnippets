@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>AppResources</Title>
+      <Shortcut>AppResources</Shortcut>
+    </Header>
+    <Snippet>
+      <Code Language="XAML">
+        <![CDATA[
+         <SolidColorBrush Color="White" x:Key="ColorPrimary"/>
+        <SolidColorBrush Color="#FF76E383" x:Key="ColorSecondary"/>
+        <SolidColorBrush Color="#FF498C51" x:Key="ColorAccent"/>
+
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource ColorAccent}"/>
+            <Setter Property="Foreground" Value="{StaticResource ColorPrimary}"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Width" Value="175"/>
+            <Setter Property="Height" Value="30"/>
+        </Style>
+
+        <Style TargetType="TextBlock" x:Key="BlockHeader">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="24"/>
+        </Style>
+
+        <Style TargetType="TextBlock" x:Key="BlockCommon">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="TextAlignment" Value="Left"/>
+        </Style>
+
+        <Style TargetType="Image">
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        ]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

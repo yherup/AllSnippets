@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>MainWindowsCSS</Title>
+      <Shortcut>MainWindowsCSS</Shortcut>
+    </Header>
+    <Snippet>
+      <Code Language="CSharp">
+        <![CDATA[
+        public MainWindow()
+        {
+            InitializeComponent();
+            frameMain.Content = new Pages.LoginPage();
+            frameMain.LoadCompleted += FrameMain_LoadCompleated;
+        }
+
+        private void FrameMain_LoadCompleated(object sender, NavigationEventArgs e)
+        {
+            if (!frameMain.CanGoBack)
+            {
+                btnBack.Content = "Показать товары";
+                userDataBlock.Text = "";
+                userDataBlock.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                btnBack.Content = "Назад";
+                if (App.currentUser != null)
+                {
+                    userDataBlock.Text = App.currentUser.UserSurname + " "
+                        + App.currentUser.UserName
+                        + " " + App.currentUser.UserPatronymic;
+                    userDataBlock.Visibility = Visibility.Visible;
+                }
+            }
+        }
+
+        private void btnBack_Click(object sender, RoutedEventArgs e)
+        {
+            if (frameMain.CanGoBack)
+                frameMain.GoBack();
+            else if (!frameMain.CanGoBack && App.currentUser != null)
+            {
+                App.currentUser = null;
+                frameMain.Navigate(new Pages.ProductPage());
+            }
+            else
+                frameMain.Navigate(new Pages.ProductPage());
+        }
+        ]]>
+      </Code>
+      <Imports>
+        <Import>
+          <Namespace>System.IO</Namespace>
+        </Import>
+      </Imports>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

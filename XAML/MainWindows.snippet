@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>MainWindows</Title>
+      <Shortcut>MainWindows</Shortcut>
+    </Header>
+    <Snippet>
+      <Code Language="XAML">
+        <![CDATA[
+         Title="ПишиСтирай" MinHeight="450" MinWidth="800" Height="450" Width="800" FontFamily="Comic Sans MS">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="75"/>
+            <RowDefinition Height="70*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Background="{StaticResource ColorSecondary}"></Grid>
+        <Frame Name="frameMain" NavigationUIVisibility="Hidden" Grid.Row="1"></Frame>
+        <Grid Grid.Row="2" Background="{StaticResource ColorSecondary}"></Grid>
+
+        <TextBlock Name="userDataBlock" HorizontalAlignment="Right" Margin="0 5 20 0"/>
+        <Image Source="/Resources/logo.png" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Button Content="Назад" HorizontalAlignment="Right" Name="btnBack" Click="btnBack_Click"/>
+        <TextBlock Style="{StaticResource BlockHeader}" Text="{Binding ElementName=frameMain, Path=Content.Title}"></TextBlock>
+    </Grid>
+        ]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>CartPage</Title>
+      <Shortcut>CartPage</Shortcut>
+    </Header>
+    <Snippet>
+      <Code Language="XAML">
+        <![CDATA[
+         Title="Корзина"
+      x:Name="Cart">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <DataGrid AutoGenerateColumns="False" Name="dataGridProducts" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Название" Binding="{Binding ProductName}"/>
+                <DataGridTextColumn Header="Описание" Binding="{Binding ProductDescription}"/>
+                <DataGridTextColumn Header="Производитель" Binding="{Binding ProductManufacturer}"/>
+                <DataGridTextColumn Header="Скидка %" Binding="{Binding ProductDiscountAmount}"/>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Name="buttonQuantityPlus" Click="buttonQuantityPlus_Click" Width="30" Content="+" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Кол-во" Binding="{Binding ProductAmount, StringFormat=N2}"/>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Name="buttonQuantityMinus" Click="buttonQuantityMinus_Click" Width="30" Content="-"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Стоимость" Binding="{Binding Cost, StringFormat=N2}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel  Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0">
+            <ComboBox Name="ComboPickUpPoint">
+            </ComboBox>
+            <Button Content="Оформит заказ" Click="Button_Click"></Button>
+        </StackPanel>
+    </Grid>
+        ]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

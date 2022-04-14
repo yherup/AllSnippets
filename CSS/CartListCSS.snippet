@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>CartListCSS</Title>
+      <Shortcut>CartListCSS</Shortcut>
+    </Header>
+    <Snippet>
+      <Code Language="CSharp">
+        <![CDATA[
+    public class CartList
+    {
+        public string ProductName { get; set; }
+        public string ProductDescription { get; set; }
+        public string ProductManufacturer { get; set; }
+        public decimal? ProductDiscountAmount { get; set; }
+        public int ProductAmount { get; set; }
+        public string ProductArticleNumber { get; set; }
+        public decimal? Cost { get; set; }
+
+        public CartList( string Name, string Description, string Manufacturer, decimal? DiscountAmount, int Amount, decimal? cost, string ArticleNumber)
+        {
+            ProductName = Name;
+            ProductDescription = Description;
+            ProductManufacturer = Manufacturer;
+            ProductDiscountAmount = DiscountAmount;
+            ProductAmount = Amount;
+            Cost = cost;
+            ProductArticleNumber = ArticleNumber;
+        }
+
+    }
+        ]]>
+      </Code>
+      <Imports>
+        <Import>
+          <Namespace>System.IO</Namespace>
+        </Import>
+      </Imports>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

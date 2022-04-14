@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>LoginPageCSS</Title>
+      <Shortcut>LoginPageCSS</Shortcut>
+    </Header>
+    <Snippet>
+      <Code Language="CSharp">
+        <![CDATA[
+        private byte _failedCounter = 0;
+        private DispatcherTimer _timer = new DispatcherTimer();
+        private string _answer;
+
+        public LoginPage()
+        {
+            InitializeComponent();
+        }
+
+        private async void buttonLogin_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                App.currentUser = await App.db.Users.FirstOrDefaultAsync(e => e.UserLogin == textBoxLogin.Text &&
+                e.UserPassword == passwordBoxPassword.Password);
+                if (App.currentUser != null)
+                {
+                    _failedCounter = 0;
+                    NavigationService.Navigate(new ProductPage());
+                }
+                else if (App.currentUser != null && _answer.ToLower() == captcha.CaptchaText.ToLower())
+                {
+                    _failedCounter = 0;
+                    NavigationService.Navigate(new ProductPage());
+                }
+                else if (App.currentUser == null && _failedCounter == 0)
+                {
+                    MessageBox.Show("Введён неверный логин или пароль", "Ошибка при авторизации", MessageBoxButton.OK,
+                        MessageBoxImage.Error);
+                    _failedCounter++;
+                    UpdateCaptcha();
+                    captcha.Visibility = Visibility.Visible;
+                    textBoxAnswerCaptcha.Visibility = Visibility.Visible;
+                }
+                else if (App.currentUser == null && _failedCounter == 1)
+                {
+                    MessageBox.Show("Авторизация не пройдена, кнопка заблокирована на 10 секунд", "Ошибка", MessageBoxButton.OK,
+                        MessageBoxImage.Error);
+                    buttonLogin.IsEnabled = false;
+                    _timer.Interval = TimeSpan.FromSeconds(10);
+                    _timer.Tick += TimerTick;
+                    _timer.Start();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка при авторизации");
+            }
+        }
+
+        private void buttonClear_Click(object sender, RoutedEventArgs e)
+        {
+            CleanupTextBoxes();
+        }
+
+        private void TimerTick(object? sender, EventArgs e)
+        {
+            _timer.Stop();
+            buttonLogin.IsEnabled = true;
+            CleanupTextBoxes();
+        }
+
+        private void CleanupTextBoxes()
+        {
+            textBoxLogin.Text = "";
+            passwordBoxPassword.Password = "";
+            textBoxAnswerCaptcha.Text = "";
+        }
+
+        private void UpdateCaptcha()
+        {
+            captcha.CreateCaptcha(EasyCaptcha.Wpf.Captcha.LetterOption.Alphanumeric, 4);
+            _answer = captcha.CaptchaText;
+        }
+        ]]>
+      </Code>
+      <Imports>
+        <Import>
+          <Namespace>System.IO</Namespace>
+        </Import>
+      </Imports>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>
